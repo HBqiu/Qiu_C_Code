@@ -3,9 +3,9 @@
 int peinr(int a,int b,int c);
 int main()
 {
-	int a,b,c,d,g,j; //aÌáÊý£¬b´íÎó´ÎÊý£¬c£¬dËæ»úÊý£¬g·ûºÅ´úºÅ 
+	int a,b,c,d,g,j; //aææ•°ï¼Œbé”™è¯¯æ¬¡æ•°ï¼Œcï¼Œdéšæœºæ•°ï¼Œgç¬¦å·ä»£å· 
 	char k; 
-	printf("ÇëÊäÈëÌâÊý(1~10)");
+	printf("è¯·è¾“å…¥é¢˜æ•°(1~10)");
 	scanf("%d",&a); 
 	if(a > 0 && a <= 10)
 	{
@@ -17,10 +17,10 @@ int main()
 			d = rand() % 10 + 1;
 			switch(g)
 				{
-					case 1: printf("ÇëÊäÈë%d + %d =____µÄ´ð°¸\n ",c,d);k = '+';break;
-					case 2: printf("ÇëÊäÈë%d - %d =____µÄ´ð°¸\n ",c,d);k = '-';break;
-					case 3: printf("ÇëÊäÈë%d * %d =____µÄ´ð°¸\n ",c,d);k = '*';break;
-					case 4: printf("ÇëÊäÈë%d / %d =____µÄ´ð°¸\n ",c,d);k = '/';break;
+					case 1: printf("è¯·è¾“å…¥%d + %d =____çš„ç­”æ¡ˆ\n ",c,d);k = '+';break;
+					case 2: printf("è¯·è¾“å…¥%d - %d =____çš„ç­”æ¡ˆ\n ",c,d);k = '-';break;
+					case 3: printf("è¯·è¾“å…¥%d * %d =____çš„ç­”æ¡ˆ\n ",c,d);k = '*';break;
+					case 4: printf("è¯·è¾“å…¥%d / %d =____çš„ç­”æ¡ˆ\n ",c,d);k = '/';break;
 				}
 			while(b)
 			{
@@ -32,18 +32,18 @@ int main()
 				else
 				{
 					printf("no\n");
-					if(b != 1) printf("Çë´ÓÐÂÊäÈë\n"); 
+					if(b != 1) printf("è¯·ä»Žæ–°è¾“å…¥\n"); 
 					b --;
 					if(b == 0)
 					{
-						 printf("\n´íÎó¶à´Î\%d %c %dÕýÈ·´ð°¸ÊÇ\"%d\"\n",c,k,d,peinr(c,d,g));
+						 printf("\né”™è¯¯å¤šæ¬¡%d %c %dæ­£ç¡®ç­”æ¡ˆæ˜¯\"%d\"\n",c,k,d,peinr(c,d,g));
 					}
 				}
 			}	 
 		}
 	}
 	else
-	printf("ÊäÈëÓÐÎó");
+	printf("è¾“å…¥æœ‰è¯¯");
  } 
 int peinr(int a,int b,int c)
 {
