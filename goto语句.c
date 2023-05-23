@@ -3,7 +3,7 @@ int main()
 {
  float a,b,c;
 i_i:
- printf("输入数字，逗号分格，按回车结束\t输入0,0退出\n");
+ printf("杈撳叆鏁板瓧锛岄�楀彿鍒嗘牸锛屾寜鍥炶溅缁撴潫\t杈撳叆0,0閫�鍑篭n");
  scanf("%f,%f",&a,&b);
  if(a == 0 && b == 0){
 	 goto i_ii;
@@ -11,10 +11,10 @@ i_i:
  }
  else if(b == 0)
  { 
-	 printf("非法输入\n\n");
+	 printf("闈炴硶杈撳叆\n\n");
  }
  else{
-	 printf("等于%0.2f\n\n",c = a / b);
+	 printf("绛変簬%0.2f\n\n",c = a / b);
  }
  goto i_i;
 
