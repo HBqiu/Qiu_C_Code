@@ -64,15 +64,30 @@ struct li *shan(struct li *P,int i)  //删除
 {
 	if(P == NULL) return 0;
 	struct li *pp = P,*q = P -> next;
+	if(1 == i)
+	{
+		printf("\n已删掉第%d节点数据\n",1);
+		pp = P -> next;
+		free(P);
+		return pp;
+	}
 	while(1)
 	{
-		if(q -> a == i)
+		if(q != NULL)
 		{
+			if(q -> a == i)
+			{
 			printf("\n已删掉第%d节点数据\n",q -> a);
 			P -> next = q -> next;
 			free(q);
 			break;		
+			}
 		}
+		else
+			{
+				printf("没有该节点\n"); 
+				break;
+			}
 		P = P -> next;
 		q = P -> next;
 	 } 
@@ -81,8 +96,21 @@ struct li *shan(struct li *P,int i)  //删除
 struct li *cha(struct li *P,int i)   //插入 
 {
 	if(P == NULL) return 0;
+	i -= 1;
 	struct li *pp = P;
 	struct li *c;
+	if(i == 0)
+	{
+		printf("\n在第%d节点插入数据\n",1);
+		c = (struct li*)malloc(sizeof(struct li));
+		printf("请输入学号\n");
+		scanf("%d",&c -> a);
+		printf("请输入学号:%d学生名字\n",c -> a);
+		scanf("%s",&c -> b);
+		c -> next = pp -> next;  //因为传入的 链表地址是之前完整的所以需要跳过第一个结点 ->next 
+		pp = c;
+		return pp;
+	}
 	while(1)
 	{
 		if(P -> a == i)
@@ -129,7 +157,7 @@ int main()
 	}
 	printf("\n请输入要添加的学号");
 	scanf("%d",&i); 
-	c = cha(c,i - 1);
+	c = cha(c,i);
 	while(c != NULL)
 	{
 		printf("学号：%d,名字：%s",c -> a,c -> b);
