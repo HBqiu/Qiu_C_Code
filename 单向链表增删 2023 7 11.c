@@ -34,8 +34,7 @@ struct li *hap()
 }
 struct li *tian(struct li* P)   //添加 
 {
-	if(P == NULL)
-		return 0;
+	if(P == NULL){	printf("空链表");	return 0;	}
 	struct li *x,*k;
 	k = P;
 	while(1)
@@ -60,13 +59,16 @@ struct li *tian(struct li* P)   //添加
 	return k;
 	
 }
-struct li *shan(struct li *P,int i)  //删除 
+struct li *shan(struct li *P)  //删除 
 {
-	if(P == NULL) return 0;
+	if(P == NULL){	printf("空链表");	return 0;	}
+	int i;
+	printf("请输入要删除的学号"); 
+	scanf("%d",&i);
 	struct li *pp = P,*q = P -> next;
 	if(1 == i)
 	{
-		printf("\n已删掉第%d节点数据\n",1);
+		printf("\n已删掉第%d学号数据\n",1);
 		pp = P -> next;
 		free(P);
 		return pp;
@@ -77,45 +79,41 @@ struct li *shan(struct li *P,int i)  //删除
 		{
 			if(q -> a == i)
 			{
-			printf("\n已删掉第%d节点数据\n",q -> a);
+			printf("\n已删掉第%d学号数据\n",q -> a);
 			P -> next = q -> next;
-			free(q);
-			break;		
+			free(q); return pp;		
 			}
 		}
-		else
-			{
-				printf("没有该节点\n"); 
-				break;
-			}
 		P = P -> next;
 		q = P -> next;
-	 } 
-	 return pp;
+	 } 	
+	printf("没有该学号\n");
 }
-struct li *cha(struct li *P,int i)   //插入 
+struct li *cha(struct li *P)   //插入 
 {
-	if(P == NULL) return 0;
-	i -= 1;
+	if(P == NULL){	printf("空链表");	return 0;	}
+	int i;
+	printf("插入第几学号数据");
+	scanf("%d",&i); 
 	struct li *pp = P;
 	struct li *c;
-	if(i == 0)
+	if(i == 1)
 	{
-		printf("\n在第%d节点插入数据\n",1);
+		printf("\n插入在第%d数据\n",1);
 		c = (struct li*)malloc(sizeof(struct li));
 		printf("请输入学号\n");
 		scanf("%d",&c -> a);
 		printf("请输入学号:%d学生名字\n",c -> a);
 		scanf("%s",&c -> b);
-		c -> next = pp -> next;  //因为传入的 链表地址是之前完整的所以需要跳过第一个结点 ->next 
+		c -> next = pp; 
 		pp = c;
 		return pp;
 	}
 	while(1)
 	{
-		if(P -> a == i)
+		if(P -> a + 1 == i)
 		{
-			printf("\n在第%d节点插入数据\n",P -> a + 1);
+			printf("\n插入在第%d数据\n",P -> a + 1);
 			c = (struct li*)malloc(sizeof(struct li));
 			printf("请输入学号\n");
 			scanf("%d",&c -> a);
@@ -131,36 +129,30 @@ struct li *cha(struct li *P,int i)   //插入
 }
 int main()
 {
-	int i;
-	struct li *p,*v,*s,*c;
-	p = hap();
-	c = v = s = p;
-	while(p != NULL)
+	struct li *p = NULL,*P; int a;
+	printf(" 1.创建链表信息 2.添加链表信息\n 3.删除链表信息 4.插入链表信息\n"); 
+	do
 	{
-		printf("学号：%d,名字：%s",p -> a,p -> b);
-		p = p -> next;
-	}
-	printf("\n末尾添加\n");
-	v = tian(v);
-		while(v != NULL)
-	{
-		printf("学号：%d,名字：%s",v -> a,v -> b);
-		v = v -> next;
-	}
-	printf("\n请输入要删除的学号");
-	scanf("%d",&i); 
-	s = shan(s,i);
-		while(s != NULL)
-	{
-		printf("学号：%d,名字：%s",s -> a,s -> b);
-		s = s -> next;
-	}
-	printf("\n请输入要添加的学号");
-	scanf("%d",&i); 
-	c = cha(c,i);
-	while(c != NULL)
-	{
-		printf("学号：%d,名字：%s",c -> a,c -> b);
-		c = c -> next;
-	}
+		printf("\n请输入编号 0退出\n");
+		scanf("%d",&a);
+		switch(a) 
+		{
+			case 0: return 0; 
+			case 1: p = hap(); break;
+			case 2: p = tian(p); break;
+			case 3: p = shan(p); break;
+			case 4: p = cha(p); break; 
+			default : printf("编号非法 重新输入"); 
+		}
+		if(a >= 1 && a <= 4)
+		{
+			P = p;
+			while(P != NULL)
+			{
+				printf("学号：%d  名字：%s  ",P -> a,P -> b);
+				P = P -> next;
+			}
+		}	
+		
+	}while(1);	
 }
