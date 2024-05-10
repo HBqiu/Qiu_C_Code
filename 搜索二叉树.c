@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define true	1
+#define false	0
+
 struct tree
 {
 
@@ -20,9 +23,12 @@ typedef struct
 struct tree *PackNode(int Tem);                         // 打包节点
 void AddNode(Root *root,int Tem);                       // 添加节点
 void Judge(Root *root,struct tree *Tem);                // 插入节点
-void PTree(struct tree *Tem);                           // 前序打印
+void PTree(struct tree *Tem);                           // 中序打印
 struct tree *DeleteNode(struct tree *Node,int Tem);     // 删除节点
- 
+void FindVal(Root *root,int val);                       // 查找元素
+int Find(Root *root,int val);                           // 查找实现
+int treeHigh(struct tree *root);                        // 树的高度
+
 struct tree *PackNode(int Tem)
 {
 
@@ -90,6 +96,14 @@ void Judge(Root *root,struct tree *Tem)
                 TemTree = TemTree -> left;
         
        }
+       else if (Tem -> element == TemTree -> element)
+       {
+
+            free(Tem);
+            break;
+
+       }
+       
        
     }
 
@@ -101,8 +115,8 @@ void PTree(struct tree *Tem)
         return;
     }
     
-    printf("%d ",Tem -> element);   
     PTree(Tem -> left);
+    printf("%d ",Tem -> element); 
     PTree(Tem -> right);
 
 }
@@ -193,11 +207,62 @@ struct tree *DeleteNode(struct tree *Node,int Tem)
     return Node;
 
 }
+int Find(Root *root,int val)
+{
+
+    struct tree *Tem = root -> TreeRoot;
+
+    while (Tem)
+    {
+
+        if (Tem -> element == val)
+        {
+            return true;
+        }
+        else if (Tem -> element > val)
+        {
+            Tem = Tem -> left;
+        }
+        else 
+            Tem = Tem -> right;
+    
+    }
+    
+    return false;
+
+}
+void FindVal(Root *root,int val)
+{
+    if (!root -> TreeRoot)
+    {
+        return ;
+    }
+
+    if (Find(root,val))
+    {
+        printf("存在");
+    }
+    else 
+        printf("不存在");
+
+    return ;
+    
+}
+int treeHigh(struct tree *root)
+{
+    if (!root)
+        return 0;
+    int Ltree = treeHigh(root -> left);
+    int Rtree = treeHigh(root -> right);
+
+    return Ltree > Rtree ? Ltree + 1 : Rtree + 1; 
+    
+}
 int main()
 {
     Root tem;
     tem.TreeRoot = NULL;
-    AddNode(&tem,10);
+   /*  AddNode(&tem,10);
     AddNode(&tem,9);
     AddNode(&tem,6);
     AddNode(&tem,7);
@@ -208,9 +273,24 @@ int main()
     AddNode(&tem,100);
     AddNode(&tem,19);
 
+    FindVal(&tem,60); */
+
+    for (int i = 0; i < 50000; i++)
+    {
+        /* code */ 
+        AddNode(&tem,rand());
+    }
+    
+   
+
     tem.TreeRoot = DeleteNode(tem.TreeRoot,6); //删除第一个元素与要更新头节点
 
+    FindVal(&tem,11);
+
     PTree(tem.TreeRoot);
+
+    printf("\nHigh %d ",treeHigh(tem.TreeRoot));
+
     return 0;
 
 }
