@@ -107,6 +107,7 @@ void PTree(struct tree *Tem)
     }
     
     printf("%d ",Tem -> element); 
+    //printf("%d  ",Tem -> element,Tem -> treeHigh); 
     PTree(Tem -> left);
     PTree(Tem -> right);
 
@@ -180,9 +181,8 @@ struct tree *leftRotate(struct tree *Tem)
     NewNode -> left = Tem;
 
     //更新树高
-    NewNode -> treeHigh = Max(getHigh(NewNode -> left),getHigh(NewNode -> right)) + 1;
     Tem -> treeHigh = Max(getHigh(Tem -> left),getHigh(Tem -> right)) + 1;
-    
+    NewNode -> treeHigh = Max(getHigh(NewNode -> left),getHigh(NewNode -> right)) + 1;
     return NewNode;
 }
 struct tree *rightRotate(struct tree *Tem)
@@ -193,8 +193,8 @@ struct tree *rightRotate(struct tree *Tem)
     NewNode -> right = Tem;
 
     //更新树高
-    NewNode -> treeHigh = Max(getHigh(NewNode -> left),getHigh(NewNode -> right)) + 1;
     Tem -> treeHigh = Max(getHigh(Tem -> left),getHigh(Tem -> right)) + 1;
+    NewNode -> treeHigh = Max(getHigh(NewNode -> left),getHigh(NewNode -> right)) + 1;
     
     return NewNode;
 }
@@ -243,8 +243,8 @@ struct tree *DeleteNode(struct tree *root,int val)
         //左右都有孩子
         else
         {
-           /*  struct tree *Tem = root -> right;
-
+            struct tree *Tem = root -> right;          //把要删除的节点右子树最小的节点代替根节点，然后释放最小的节点，转换为了前两种情况
+                                        
             while (Tem -> left)
             {
                 Tem = Tem -> left;
@@ -252,16 +252,16 @@ struct tree *DeleteNode(struct tree *root,int val)
 
             root -> element = Tem -> element;
 
-            root -> right = DeleteNode(root -> right,Tem -> element);  */
+            root -> right = DeleteNode(root -> right,Tem -> element); //因为50比原来节点大但是不能把当前新结点直接给它（当前节点值是50）所有给新节点的右孩子
 
-            struct tree *Tem = root -> left;
+            /* struct tree *Tem = root -> left;
             while (Tem -> right)
             {
-                Tem = Tem -> right;
-            }
-            Tem -> right = root -> right;
+                Tem = Tem -> right;                   这个删除方法仅适用于二叉树，平衡树删除节点后新根节点以及新根的右子树不会更新树的高
+            }                                         还要写单独的递归函数更新节点的高，如果更新树高为一个单独的函数（调用后从最后一个节点一直更新到根节）可以这样
+            Tem -> right = root -> right;             但是不符合当前的逻辑结构
 
-            root = root -> left;
+            root = root -> left; */
         }
     }
 
@@ -306,7 +306,7 @@ int main()
     Root tem;
     tem.TreeRoot = NULL;
 
-    for (int i = 1; i < 8; i++)
+    for (int i = 1; i < 9; i++)
     {
         tem.TreeRoot = AddNode(tem.TreeRoot,i * 10);
     }
@@ -316,26 +316,35 @@ int main()
     printf("\n-------------中序打印----------------\n");
     middleTree(tem.TreeRoot);
     printf("\n");
-    
-    tem.TreeRoot = DeleteNode(tem.TreeRoot,10);
-    tem.TreeRoot = DeleteNode(tem.TreeRoot,20);
-    tem.TreeRoot = DeleteNode(tem.TreeRoot,30);
 
+    for (int i = 0; i < 10; i++)
+    {
+        FindVal(&tem,i * 10);
+    }
+
+    printf("\ntreeHigh:%d \n",getHigh(tem.TreeRoot));
+    
+    // tem.TreeRoot = DeleteNode(tem.TreeRoot,10);
+    // tem.TreeRoot = DeleteNode(tem.TreeRoot,20);
+     tem.TreeRoot = DeleteNode(tem.TreeRoot,40);
+
+    
     printf("-------------前序打印----------------\n");
     PTree(tem.TreeRoot);
     printf("\n-------------中序打印----------------\n");
     middleTree(tem.TreeRoot);
     printf("\n");
-    /* for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
-        FindVal(&tem,i);
+        FindVal(&tem,i * 10);
     }
     printf("\n");
     
     printf("treeHigh:%d \n",getHigh(tem.TreeRoot)); //根节点的树高就是这个树的深度
     
     printf("treeHigh:%d \n",tem.TreeRoot -> treeHigh); //直接查看根节点树高
- */
+
+    
     return 0;
 
 }
