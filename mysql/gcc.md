@@ -1,0 +1,1 @@
+gcc  -lmysqlclient -lssl -lcrypto
