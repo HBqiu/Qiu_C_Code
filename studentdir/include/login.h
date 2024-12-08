@@ -17,6 +17,6 @@ void print_binary(unsigned char *data, size_t length);
 void print_all_records(MYSQL *conn);
 // 从数据库中查找用户并验证密码
 //int verify_user_login(MYSQL *conn, const char *username, const char *password);
-
+int verify_user_root(MYSQL *conn, const char *username); //验证权限
 
 #endif
