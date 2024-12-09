@@ -70,9 +70,10 @@ int verify_user_root(MYSQL *conn, const char *username)
     }
     else
     {
-        // fprintf(stderr, "mysql_stmt_fetch failed: %s\n", mysql_error(conn));
+       // fprintf(stderr, "mysql_stmt_fetch failed: %s\n", mysql_error(conn));
     }
 
     mysql_stmt_close(stmt);
     return 0; // 登录失败
 }
+

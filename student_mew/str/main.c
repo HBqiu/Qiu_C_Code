@@ -16,16 +16,16 @@
 // 函数声明
 MYSQL *connect_to_db();
 MYSQL *connect_to_stu();
-int handle_login(MYSQL *conn, char *);
+int handle_login(MYSQL *conn,char *);
 void handle_register(MYSQL *conn);
 void handle_password_change(MYSQL *conn);
 
 int main()
 {
-
+	
     int choice;
     MYSQL *conn = connect_to_db();
-    char usernamebd[MAX_INPUT_LEN] = {0};
+	char usernamebd[MAX_INPUT_LEN] = {0};
     if (!conn)
     {
         printf("数据库连接失败，程序退出。\n");
@@ -39,7 +39,7 @@ int main()
     switch (choice)
     {
     case 1:
-        if (handle_login(conn, usernamebd))
+        if (handle_login(conn,usernamebd))
         {
             MYSQL *connstu = connect_to_stu();
             int choice;
@@ -54,11 +54,11 @@ int main()
                 switch (choice)
                 {
                 case 1:
-                    if (!verify_user_root(conn, usernamebd))
-                    {
-                        printf("权限不够");
-                        break;
-                    }
+			if(!verify_user_root(conn,usernamebd))
+			{
+				printf("权限不够");
+				break;
+			}
                     // 插入新学生
                     printf("请输入学生ID: ");
                     scanf("%d", &student_id);
@@ -100,11 +100,11 @@ int main()
                     break;
 
                 case 6:
-                    if (!verify_user_root(conn, usernamebd))
-                    {
-                        printf("权限不够");
-                        break;
-                    }
+			if(!verify_user_root(conn,usernamebd))
+                        {
+                                printf("权限不够");
+                                break;
+                        }
                     // 更新学生信息
                     printf("请输入学生ID: ");
                     scanf("%d", &student_id);
@@ -126,11 +126,11 @@ int main()
                     break;
 
                 case 7:
-                    if (!verify_user_root(conn, usernamebd))
-                    {
-                        printf("权限不够");
-                        break;
-                    }
+if(!verify_user_root(conn,usernamebd))
+                        {
+                                printf("权限不够");
+                                break;
+                        }
                     // 删除学生信息
                     printf("请输入学生ID: ");
                     scanf("%d", &student_id);
@@ -162,7 +162,7 @@ int main()
         handle_register(conn);
         break;
     case 3:
-        srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
         handle_password_change(conn);
         break;
     default:
@@ -213,9 +213,9 @@ MYSQL *connect_to_db()
 }
 
 // 登录处理
-int handle_login(MYSQL *conn, char *username)
+int handle_login(MYSQL *conn,char *username)
 {
-    // char username[MAX_INPUT_LEN];
+    //char username[MAX_INPUT_LEN];
     char password[MAX_INPUT_LEN];
 
     printf("请输入用户名: ");
@@ -241,7 +241,7 @@ int handle_login(MYSQL *conn, char *username)
 // 注册处理
 void handle_register(MYSQL *conn)
 {
-    //	print_all_records(conn);
+//	print_all_records(conn);
     char username[MAX_INPUT_LEN];
     char password[MAX_INPUT_LEN];
     char salt[SALT_LEN + 1] = {0};
@@ -257,13 +257,13 @@ void handle_register(MYSQL *conn)
 
     generate_salt(salt, SALT_LEN);
 
-    /*    MD5_CTX md5_ctx;
-        MD5_Init(&md5_ctx);
-        MD5_Update(&md5_ctx, salt, strlen(salt));
-        MD5_Update(&md5_ctx, password, strlen(password));
-        MD5_Final(hashed_password, &md5_ctx);
-    */
-    generate_md5_hash(password, salt, hashed_password);
+/*    MD5_CTX md5_ctx;
+    MD5_Init(&md5_ctx);
+    MD5_Update(&md5_ctx, salt, strlen(salt));
+    MD5_Update(&md5_ctx, password, strlen(password));
+    MD5_Final(hashed_password, &md5_ctx);
+*/
+generate_md5_hash(password,salt,hashed_password);
     insert_user_to_db(conn, username, hashed_password, salt);
 }
 
@@ -333,3 +333,4 @@ void handle_password_change(MYSQL *conn)
         printf("无效的选择。\n");
     }
 }
+

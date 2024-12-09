@@ -1,0 +1,1 @@
+gcc -c main.1c -o ../bin/main1.o -I ../include/ -lmysqlclient -lssl -lcrypto
